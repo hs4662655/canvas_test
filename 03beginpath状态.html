@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>beginpath状态的使用</title>
+</head>
+<body>
+<div id="container">
+    <canvas id="cavsElem" width="600px" height="600px">
+
+    </canvas>
+</div>
+<script>
+    (function () {
+        var canvas = document.querySelector('#cavsElem');
+        var ctx = canvas.getContext('2d');
+        canvas.style.border = "1px solid #000";
+        //目标：画出红绿蓝三条线
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = 'red';
+
+        //第一条线
+        ctx.beginPath();
+        ctx.moveTo(100, 100);
+        ctx.lineTo(300, 100);
+        ctx.stroke();
+
+        //第二条线
+        ctx.beginPath();
+        ctx.strokeStyle = 'green';
+        ctx.moveTo(100, 300);
+        ctx.lineTo(300, 300);
+        ctx.stroke();
+        //第三条线
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.moveTo(100, 500);
+        ctx.lineTo(300, 500);
+        ctx.stroke();
+    }());
+</script>
+</body>
+</html>

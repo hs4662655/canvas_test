@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02绘制表格</title>
+</head>
+<body>
+<div id="container">
+    <canvas id="cavsElem" width="600px" height="600px">
+
+    </canvas>
+</div>
+<script>
+    (function () {
+        var canvas = document.querySelector('#cavsElem');
+        var ctx = canvas.getContext('2d');
+        canvas.style.border = "1px solid #000";
+        //定义每个小格的宽高为10px
+        var rectW = 10;
+        var rectH = 10;
+        ctx.lineWidth = 0.5;
+        //绘制表格
+        //1.绘制横着的线
+        for (var i = 0; i <= canvas.width / rectW; i++) {
+            ctx.moveTo(0, i * rectH);
+            ctx.lineTo(canvas.width, i * rectH);
+            //2.绘制竖着的线
+            ctx.moveTo(i * rectH, 0);
+            ctx.lineTo(i * rectW, canvas.height);
+        }
+        ctx.stroke();
+    }());
+</script>
+</body>
+</html>
