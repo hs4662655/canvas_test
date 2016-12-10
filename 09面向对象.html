@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>面向对象(传入对象)</title>
+</head>
+<body>
+<script>
+    (function () {
+        function Cat(option) {
+            this.name = option.name;
+            this.age = option.age;
+        };
+        Cat.prototype.show = function () {
+            console.log(this.age + " " + this.name);
+        };
+        var cat = new Cat({name: 'hs', age: 99});
+        cat.show();
+    })();
+</script>
+</body>
+</html>

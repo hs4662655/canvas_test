@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用面向对象的方式绘制精灵图</title>
+</head>
+<body>
+<div class="container">
+    <canvas id="canvasBox"></canvas>
+</div>
+<button id="btn_left">左</button>
+<button id="btn_right">右</button>
+<button id="btn_inside">里</button>
+<button id="btn_outside">外</button>
+
+<script>
+    window.onload = function () {
+        //获取canvas标签
+        var canvas = document.getElementById('canvasBox');
+        canvas.width = 600;
+        canvas.height = 600;
+        canvas.style.border = '1px solid red';
+        //获取上下文
+        var ctx = canvas.getContext('2d');
+        /*   //绘制的坐标
+         this.x = options.x === 0 ? 0 : options.x || 10;
+         this.y = options.y === 0 ? 0 : options.y || 10;
+         //绘制到canvas的大小
+         this.w = options.w || 40;
+         this.h = options.h || 65;
+         //绘制的图片
+         this.imgsrc = options.imgsrc || '';
+         //绘制的精灵图片大小
+         this.originW = options.originX || 40;
+         this.originH = options.originY || 65;
+         //绘制的fps
+         this.fps = options.fps || 10;
+         //绘制的图片方向
+         this._dirIndex = 0;
+         */
+        var sprite = new Sprite({
+            x: 100, y: 100, w: 80, h: 80, imgsrc: 'img/gameImgs/DMMban.png', originW: 40, originH: 65, fps: 100
+        });
+        sprite.render(ctx);
+        document.getElementById('btn_left').onclick = function () {
+            sprite.changeDir('left');
+        };
+        document.getElementById('btn_right').onclick = function () {
+            sprite.changeDir('right');
+        };
+        document.getElementById('btn_outside').onclick = function () {
+            sprite.changeDir('outside');
+        };
+        document.getElementById('btn_inside').onclick = function () {
+            sprite.changeDir('inside');
+        }
+
+
+    }
+
+</script>
+<script src="js/10.js"></script>
+</body>
+</html>

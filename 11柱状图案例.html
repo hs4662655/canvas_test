@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用面向对象创建柱状图</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+    </style>
+    <script src="bower_components/konva/konva.js"></script>
+</head>
+<body>
+<div id="container">
+</div>
+<script>
+    //创建一个舞台
+    var stage = new Konva.Stage({
+        'container': 'container',
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+    var cenX = window.innerWidth / 2;
+    var cenY = window.innerHeight / 2;
+    //创建一个层
+    var layer = new Konva.Layer();
+    stage.add(layer);
+
+    //柱状图的数据
+    var data = [
+        {name: '前端', value: '.8', color: 'green'},
+        {name: 'PHP', value: '.3', color: 'blue'},
+        {name: 'Java', value: '.7', color: 'red'},
+        {name: 'UI', value: '.9', color: 'orange'},
+        {name: 'IOS', value: '.4', color: 'purple'},
+        {name: 'Android', value: '.9', color: 'pink'}
+    ];
+
+    //先将柱状图的坐标确定好
+    var x0 = 1 / 8 * stage.width();
+    var y0 = 3 / 4 * stage.height();
+
+    var width = 3 / 4 * stage.width();//柱状图的宽度
+    var height = 1 / 2 * stage.height();//柱状图的最高高度
+    //将柱状图的横线画出来
+    var bsLine = new Konva.Line({
+        points: [x0, y0, x0 + width, y0],
+        stroke: 'green',
+        opacity: .8
+    });
+
+    //首先确定于矩形和矩形两边的距离
+    var rectWidth = width / data.length;
+    //开始画矩形
+    data.forEach(function (item, index) {
+        var rect = new Konva.Rect({
+            x: x0 + (1 / 4 + index) * rectWidth,
+            y: y0 - item.value * height,
+            width: 1 / 2 * rectWidth,
+            height: item.value * height,
+            fill: item.color,
+            opacity: .9,
+            cornerRadius: 10,
+            shadowBlur: 10,//设置阴影的颜色
+            shadowColor: 'black'//设置阴影的颜色
+        });
+        layer.add(rect);
+        //开始画百分比
+        var text = new Konva.Text({
+            x: x0 + index * rectWidth,
+            y: y0 - item.value * height - 14,
+            fontSize: 14,
+            text: item.value * 100 + '%',
+            fill: item.color,
+            width: rectWidth,
+            align: 'center',
+            name: 'textPercent'
+        });
+        layer.add(text);
+
+
+        //把文字放到底部
+        var textBottom = new Konva.Text({
+            x: x0 + (1 / 4 + index) * rectWidth,
+            y: y0,
+            fontSize: 14,
+            text: item.name,
+            fill: item.color,
+            rotation: 30,
+
+        });
+        layer.add(textBottom);
+    });
+
+
+    layer.add(bsLine);
+    layer.draw();
+
+    //点击任何的舞台的区域的时候，都会触发下面的事件
+    stage.on('contentClick', function () {
+        layer.find('Rect').each(function (item, index) {
+            item.y(y0);
+            item.height(0);
+            item.to({
+                duration: 1,
+                y: y0 - data[index].value * height,
+                height: data[index].value * height
+            });
+        });
+
+        //
+        layer.find('.textPercent').each(function (item, index) {
+            item.y(y0 - 14);
+            item.to({
+                duration: 1,
+                y: y0 - data[index].value * height-14
+            });
+        });
+    });
+</script>
+</body>
+</html>
